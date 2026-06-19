@@ -97,23 +97,31 @@ function loadQuestion(){
 
 function checkAnswer(btn, option){
 
-    let correctAnswer =
-    questions[currentQuestion].answer;
+    let correctAnswer = questions[currentQuestion].answer;
+
+    // Disable all buttons after one click
+    let buttons = document.querySelectorAll(".option");
+
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
 
     if(option === correctAnswer){
-
         btn.classList.add("correct");
         score++;
-
     }else{
-
         btn.classList.add("wrong");
+
+        // Show the correct answer
+        buttons.forEach(button => {
+            if(button.innerText === correctAnswer){
+                button.classList.add("correct");
+            }
+        });
     }
 
-    scoreText.innerText =
-    "Score: " + score;
+    scoreText.innerText = "Score: " + score;
 }
-
 nextBtn.onclick = () => {
 
     currentQuestion++;
@@ -131,5 +139,7 @@ nextBtn.onclick = () => {
         nextBtn.style.display = "none";
     }
 };
+
+loadQuestion();
 
 loadQuestion();
